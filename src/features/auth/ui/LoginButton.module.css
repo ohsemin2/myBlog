@@ -1,0 +1,16 @@
+.loginButton {
+  height: 36px;
+  padding: 0 16px;
+  border: 0px solid var(--color-black);
+  border-radius: 3px;
+  background: transparent;
+  color: var(--color-black);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 200ms;
+}
+
+.loginButton:hover {
+  background-color: #80808016;
+}
