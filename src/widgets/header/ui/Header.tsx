@@ -17,7 +17,7 @@ export default async function Header() {
       <div className={styles.container}>
         <div className={styles.left}>
           <button className={styles.menuButton}>
-            <Image src={linesIcon} alt="메뉴" width={20} height={20} />
+            <Image src={linesIcon} alt="메뉴" width={21} height={21} />
           </button>
           <span className={styles.blogName}>Semin&apos;s Blog</span>
         </div>
