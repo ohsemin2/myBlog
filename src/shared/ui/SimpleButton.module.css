@@ -1,16 +1,21 @@
-.loginButton {
+.simpleButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 36px;
   padding: 0 16px;
-  border: 0px solid var(--color-black);
+  border: none;
   border-radius: 3px;
   background: transparent;
-  color: var(--color-black);
+  color: #171717;
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
   transition: background-color 200ms;
 }
 
-.loginButton:hover {
+.simpleButton:hover {
   background-color: #80808016;
 }

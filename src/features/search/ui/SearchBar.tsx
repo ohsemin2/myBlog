@@ -1,5 +1,6 @@
 import Image from "next/image";
 import readingGlasses from "@/shared/assets/reading_glasses.png";
+import { simpleButtonStyles } from "@/shared/ui";
 import styles from "./SearchBar.module.css";
 
 export default function SearchBar() {
@@ -10,7 +11,7 @@ export default function SearchBar() {
         placeholder="검색어를 입력하세요"
         className={styles.input}
       />
-      <button className={styles.searchButton}>
+      <button className={`${simpleButtonStyles.simpleButton} ${styles.searchButton}`}>
         <Image
           src={readingGlasses}
           alt="검색"

@@ -1,7 +1,8 @@
-import styles from "./SignupButton.module.css";
+import Link from "next/link";
+import { simpleButtonStyles } from "@/shared/ui";
 
 export default function SignupButton() {
   return (
-    <button className={styles.signupButton}>회원가입</button>
+    <Link href="/signup" className={simpleButtonStyles.simpleButton}>회원가입</Link>
   );
 }

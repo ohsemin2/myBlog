@@ -1,0 +1,28 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 448px;
+}
+
+.createPostButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 36px;
+  padding: 11px;
+  border: none;
+  border-radius: 3px;
+  background: black;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 200ms;
+}
+
+.createPostButton:hover {
+  background-color: #171717bd;
+}

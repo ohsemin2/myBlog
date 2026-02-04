@@ -1,16 +1,20 @@
-.signupButton {
+.blackButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 36px;
   padding: 0 16px;
   border: none;
   border-radius: 3px;
-  background-color: var(--color-white);
-  color: #000000;
+  background: black;
+  color: #ffffff;
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
+  text-decoration: none;
   transition: background-color 200ms;
 }
 
-.signupButton:hover {
+.blackButton:hover {
   background-color: #80808016;
 }

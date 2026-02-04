@@ -1,7 +1,8 @@
-import styles from "./LoginButton.module.css";
+import Link from "next/link";
+import { simpleButtonStyles } from "@/shared/ui";
 
 export default function LoginButton() {
   return (
-    <button className={styles.loginButton}>로그인</button>
+    <Link href="/login" className={simpleButtonStyles.simpleButton}>로그인</Link>
   );
 }
