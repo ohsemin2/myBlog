@@ -1,0 +1,67 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+.titleInput {
+  width: 100%;
+  padding: 12px 0;
+  margin-bottom: 16px;
+  border: none;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 28px;
+  font-weight: 700;
+  outline: none;
+}
+
+.titleInput::placeholder {
+  color: #bdbdbd;
+}
+
+.editorWrapper {
+  width: 100%;
+}
+
+.editorWrapper .toastui-editor-contents p {
+  font-size: 16px;
+}
+
+.editorWrapper .toastui-editor-contents h1,
+.editorWrapper .toastui-editor-contents h2,
+.editorWrapper .toastui-editor-contents h3,
+.editorWrapper .toastui-editor-contents h4,
+.editorWrapper .toastui-editor-contents h5,
+.editorWrapper .toastui-editor-contents h6 {
+  border: none;
+}
+
+.buttonWrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+.submitButton {
+  padding: 10px 32px;
+  border: none;
+  border-radius: 4px;
+  background: black;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 200ms;
+}
+
+.submitButton:hover {
+  background-color: #171717bd;
+}
+
+.submitButton:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}

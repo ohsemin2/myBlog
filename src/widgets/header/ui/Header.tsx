@@ -5,6 +5,7 @@ import { AuthButtons } from "@/features/auth/ui";
 import { createClient } from "@/shared/api/supabase/server";
 import { CreatePost } from "@/features/post/create/ui";
 import styles from "./Header.module.css";
+import Link from "next/link";
 
 export default async function Header() {
   const supabase = await createClient();
@@ -19,7 +20,9 @@ export default async function Header() {
           <button className={styles.menuButton}>
             <Image src={linesIcon} alt="메뉴" width={20} height={20} />
           </button>
-          <span className={styles.blogName}>Semin&apos;s Blog</span>
+          <Link href="/" className={styles.blogName}>
+            Semin&apos;s Blog
+          </Link>
         </div>
 
         <div className={styles.center}>
