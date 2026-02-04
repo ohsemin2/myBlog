@@ -1,7 +1,10 @@
 "use client";
 
-import { useActionState } from "react";
+import { useState, useActionState } from "react";
 import Link from "next/link";
+import Image from "next/image";
+import openedEye from "@/shared/assets/opened_eye.png";
+import closedEye from "@/shared/assets/closed_eye.png";
 import { login } from "@/features/auth/api";
 import type { AuthState } from "@/features/auth/model";
 import styles from "./page.module.css";
@@ -11,6 +14,7 @@ export default function LoginPage() {
     login,
     { error: null }
   );
+  const [showPassword, setShowPassword] = useState(false);
 
   return (
     <div className={styles.page}>
@@ -33,13 +37,27 @@ export default function LoginPage() {
         <label className={styles.label} htmlFor="password">
           비밀번호
         </label>
-        <input
-          className={styles.input}
-          id="password"
-          name="password"
-          type="password"
-          required
-        />
+        <div className={styles.passwordWrapper}>
+          <input
+            className={styles.passwordInput}
+            id="password"
+            name="password"
+            type={showPassword ? "text" : "password"}
+            required
+          />
+          <button
+            type="button"
+            className={styles.eyeButton}
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            <Image
+              src={showPassword ? openedEye : closedEye}
+              alt="비밀번호 표시"
+              width={20}
+              height={20}
+            />
+          </button>
+        </div>
 
         <button className={styles.submitButton} type="submit" disabled={pending}>
           {pending ? "로그인 중..." : "로그인"}

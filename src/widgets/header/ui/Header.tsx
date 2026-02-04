@@ -27,7 +27,7 @@ export default async function Header() {
         </div>
 
         <div className={styles.right}>
-          <CreatePost />
+          {user && <CreatePost />}
           <AuthButtons user={user} />
         </div>
       </div>

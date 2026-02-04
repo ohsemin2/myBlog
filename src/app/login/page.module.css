@@ -41,6 +41,39 @@
   border-color: #171717;
 }
 
+.passwordWrapper {
+  display: flex;
+  align-items: center;
+  border: 1px solid #d1d5db;
+  border-radius: 3px;
+  transition: border-color 200ms;
+}
+
+.passwordWrapper:focus-within {
+  border-color: #171717;
+}
+
+.passwordInput {
+  flex: 1;
+  height: 40px;
+  padding: 0 12px;
+  border: none;
+  border-radius: 3px 0 0 3px;
+  font-size: 14px;
+  outline: none;
+}
+
+.eyeButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
 .submitButton {
   height: 40px;
   margin-top: 12px;
