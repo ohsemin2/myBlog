@@ -15,11 +15,12 @@ export default function PostEditor() {
   const router = useRouter();
 
   const toolbarItems = [
-    ["heading"],
-    ["bold", "italic", "strike"],
-    ["ul", "ol"],
-    ["image", "link"],
+    ["heading", "bold", "italic", "strike"],
+    ["hr", "quote"],
+    ["ul", "ol", "task", "indent", "outdent"],
+    ["table", "image", "link"],
     ["code", "codeblock"],
+    ["scrollSync"],
   ];
 
   const handleSubmit = async () => {

@@ -1,0 +1,50 @@
+.section {
+  margin-bottom: 48px;
+}
+
+.heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 0 20px;
+  font-size: 24px;
+  font-weight: 700;
+  color: #171717;
+  width: 50%;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 50%;
+}
+
+.empty {
+  padding: 40px 0;
+  text-align: center;
+  color: #999;
+}
+
+.moreWrapper {
+  display: flex;
+}
+
+.moreButton {
+  padding: 10px 24px;
+  border: 1px solid #171717;
+  border-radius: 3px;
+  background: transparent;
+  color: #171717;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition:
+    background-color 200ms,
+    color 200ms;
+}
+
+.moreButton:hover {
+  background: #171717;
+  color: white;
+}

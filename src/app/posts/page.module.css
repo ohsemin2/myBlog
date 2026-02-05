@@ -1,0 +1,29 @@
+.page {
+  min-height: 100vh;
+  background-color: var(--background);
+}
+
+.main {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+.heading {
+  margin: 0 0 24px;
+  font-size: 28px;
+  font-weight: 700;
+  color: #171717;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.empty {
+  padding: 40px 0;
+  text-align: center;
+  color: #999;
+}

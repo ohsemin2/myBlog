@@ -1,4 +1,5 @@
 import { Header } from "@/widgets/header/ui";
+import { RecentPosts } from "@/features/post/list/ui";
 import styles from "./page.module.css";
 
 export default function Home() {
@@ -6,7 +7,7 @@ export default function Home() {
     <div className={styles.page}>
       <Header />
       <main className={styles.main}>
-        {/* 메인 콘텐츠 영역 */}
+        <RecentPosts />
       </main>
     </div>
   );
