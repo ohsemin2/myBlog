@@ -1,6 +1,10 @@
 import { notFound } from "next/navigation";
+import Image from "next/image";
+import Link from "next/link";
+import Markdown from "react-markdown";
 import { Header } from "@/widgets/header/ui";
 import { createClient } from "@/shared/api/supabase/server";
+import pencilIcon from "@/shared/assets/pencil.png";
 import styles from "./page.module.css";
 
 interface PageProps {
@@ -20,6 +24,8 @@ export default async function PostDetailPage({ params }: PageProps) {
     notFound();
   }
 
+  const { data: { user } } = await supabase.auth.getUser();
+
   const date = new Date(post.created_at).toLocaleDateString("ko-KR", {
     year: "numeric",
     month: "long",
@@ -33,10 +39,17 @@ export default async function PostDetailPage({ params }: PageProps) {
         <article className={styles.article}>
           <header className={styles.header}>
             <h1 className={styles.title}>{post.title}</h1>
-            <time className={styles.date}>{date}</time>
+            <div className={styles.dateRow}>
+              <time className={styles.date}>{date}</time>
+              {user && (
+                <Link href={`/post/${post.id}/edit`} className={styles.editButton}>
+                  <Image src={pencilIcon} alt="수정" width={16} height={16} />
+                </Link>
+              )}
+            </div>
           </header>
           <div className={styles.content}>
-            {post.content}
+            <Markdown>{post.content || ""}</Markdown>
           </div>
         </article>
       </main>

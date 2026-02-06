@@ -8,9 +8,19 @@ import "@toast-ui/editor/dist/toastui-editor.css";
 import "@toast-ui/editor/dist/i18n/ko-kr";
 import styles from "./PostEditor.module.css";
 
-export default function PostEditor() {
+interface PostEditEditorProps {
+  id: string;
+  initialTitle: string;
+  initialContent: string;
+}
+
+export default function PostEditEditor({
+  id,
+  initialTitle,
+  initialContent,
+}: PostEditEditorProps) {
   const editorRef = useRef<Editor>(null);
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState(initialTitle);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
@@ -58,18 +68,21 @@ export default function PostEditor() {
     setIsSubmitting(true);
 
     const supabase = createClient();
-    const { error } = await supabase.from("post").insert({
-      title: title.trim(),
-      content,
-    });
+    const { error } = await supabase
+      .from("post")
+      .update({
+        title: title.trim(),
+        content,
+      })
+      .eq("id", id);
 
     if (error) {
-      alert("저장에 실패했습니다: " + error.message);
+      alert("수정에 실패했습니다: " + error.message);
       setIsSubmitting(false);
       return;
     }
 
-    router.push("/");
+    router.push(`/post/${id}`);
   };
 
   return (
@@ -87,7 +100,7 @@ export default function PostEditor() {
           initialEditType="markdown"
           previewStyle="vertical"
           height="calc(100vh - 260px)"
-          initialValue=""
+          initialValue={initialContent || ""}
           toolbarItems={toolbarItems}
           placeholder="내용을 입력해주세요"
           language="ko-KR"
@@ -110,7 +123,7 @@ export default function PostEditor() {
           onClick={handleSubmit}
           disabled={isSubmitting}
         >
-          {isSubmitting ? "저장 중..." : "발행"}
+          {isSubmitting ? "수정 중..." : "수정"}
         </button>
       </div>
     </div>
