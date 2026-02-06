@@ -1,17 +1,22 @@
-.card {
-  display: block;
-  padding: 20px;
-  border: 1px solid #e0e0e0;
-  border-radius: 3px;
-  text-decoration: none;
-  color: inherit;
-  transition:
-    box-shadow 200ms,
-    border-color 200ms;
+.wrapper {
+  display: flex;
+  flex-direction: column;
 }
 
-.card:hover {
-  border-color: #bdbdbd;
+.wrapper:last-child .hr {
+  display: none;
+}
+
+.card {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.wrapper:hover {
+  background-color: #f5f5f5;
+  transition: background-color 200ms;
 }
 
 .title {
@@ -26,9 +31,21 @@
   font-size: 14px;
   color: #666;
   line-height: 1.5;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3; /* 3줄까지만 */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .date {
   font-size: 12px;
   color: #999;
+}
+
+.hr {
+  margin: 0;
+  border: 0;
+  border-bottom: 1px solid #e0e0e0;
 }
