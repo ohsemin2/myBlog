@@ -14,11 +14,14 @@
     "@toast-ui/editor-plugin-color-syntax": "^3.1.0",
     "@toast-ui/react-editor": "^3.2.3",
     "@vercel/analytics": "^1.6.1",
+    "katex": "^0.16.28",
     "next": "16.1.6",
     "nextjs-toploader": "^3.9.17",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-markdown": "^10.1.0",
+    "rehype-katex": "^7.0.1",
+    "remark-math": "^6.0.0",
     "tui-color-picker": "^2.2.8"
   },
   "devDependencies": {

@@ -2,6 +2,9 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import Markdown from "react-markdown";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
+import "katex/dist/katex.min.css";
 import { Header } from "@/widgets/header/ui";
 import { createClient } from "@/shared/api/supabase/server";
 import pencilIcon from "@/shared/assets/pencil.png";
@@ -49,7 +52,12 @@ export default async function PostDetailPage({ params }: PageProps) {
             </div>
           </header>
           <div className={styles.content}>
-            <Markdown>{post.content || ""}</Markdown>
+            <Markdown
+              remarkPlugins={[remarkMath]}
+              rehypePlugins={[rehypeKatex]}
+            >
+              {post.content || ""}
+            </Markdown>
           </div>
         </article>
       </main>
