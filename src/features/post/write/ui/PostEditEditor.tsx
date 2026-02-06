@@ -6,8 +6,6 @@ import { createClient } from "@/shared/api/supabase/client";
 import { Editor } from "@toast-ui/react-editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import "@toast-ui/editor/dist/i18n/ko-kr";
-import katex from "@toast-ui/editor-plugin-katex";
-import "katex/dist/katex.min.css";
 import styles from "./PostEditor.module.css";
 
 interface PostEditEditorProps {
@@ -46,9 +44,7 @@ export default function PostEditEditor({
       throw new Error(error.message);
     }
 
-    const { data: urlData } = supabase.storage
-      .from("post-image")
-      .getPublicUrl(data.path);
+    const { data: urlData } = supabase.storage.from("post-image").getPublicUrl(data.path);
 
     return urlData.publicUrl;
   };
@@ -106,9 +102,11 @@ export default function PostEditEditor({
           toolbarItems={toolbarItems}
           placeholder="내용을 입력해주세요"
           language="ko-KR"
-          plugins={[katex]}
           hooks={{
-            addImageBlobHook: async (blob: Blob, callback: (url: string, alt: string) => void) => {
+            addImageBlobHook: async (
+              blob: Blob,
+              callback: (url: string, alt: string) => void,
+            ) => {
               try {
                 const url = await uploadImage(blob);
                 callback(url, "image");
