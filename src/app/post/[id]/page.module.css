@@ -59,7 +59,7 @@
   color: #333;
 }
 
-.content h1 {
+.h1 {
   font-size: 2em;
   font-weight: 700;
   margin: 1.5em 0 0.5em;
@@ -67,15 +67,25 @@
   color: #171717;
 }
 
-.content h2 {
+.h1:first-child {
+  margin-top: 0;
+}
+
+.h2 {
   font-size: 1.5em;
   font-weight: 700;
   margin: 1.4em 0 0.5em;
   line-height: 1.3;
   color: #171717;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 0.3em;
 }
 
-.content h3 {
+.h2:first-child {
+  margin-top: 0;
+}
+
+.h3 {
   font-size: 1.25em;
   font-weight: 600;
   margin: 1.3em 0 0.4em;
@@ -83,18 +93,22 @@
   color: #171717;
 }
 
-.content h4 {
+.h3:first-child {
+  margin-top: 0;
+}
+
+.h4 {
   font-size: 1.1em;
   font-weight: 600;
   margin: 1.2em 0 0.4em;
   color: #171717;
 }
 
-.content p {
+.p {
   margin: 0.8em 0;
 }
 
-.content blockquote {
+.blockquote {
   margin: 1em 0;
   padding: 0.5em 1em;
   border-left: 4px solid #e0e0e0;
@@ -102,24 +116,24 @@
   background: #fafafa;
 }
 
-.content ul,
-.content ol {
+.ul,
+.ol {
   margin: 0.8em 0;
   padding-left: 1.5em;
 }
 
-.content li {
+.li {
   margin: 0.3em 0;
 }
 
-.content code {
+.inlineCode {
   background: #f0f0f0;
   padding: 0.15em 0.4em;
   border-radius: 4px;
   font-size: 0.9em;
 }
 
-.content pre {
+.pre {
   background: #1e1e1e;
   color: #d4d4d4;
   padding: 1em;
@@ -128,44 +142,44 @@
   margin: 1em 0;
 }
 
-.content pre code {
+.pre code {
   background: none;
   padding: 0;
   font-size: 0.9em;
   color: inherit;
 }
 
-.content hr {
+.hr {
   border: none;
   border-top: 1px solid #e0e0e0;
   margin: 2em 0;
 }
 
-.content a {
+.a {
   color: #0070f3;
   text-decoration: underline;
 }
 
-.content img {
+.img {
   max-width: 100%;
   border-radius: 8px;
   margin: 1em 0;
 }
 
-.content table {
+.table {
   width: 100%;
   border-collapse: collapse;
   margin: 1em 0;
 }
 
-.content th,
-.content td {
+.th,
+.td {
   border: 1px solid #e0e0e0;
   padding: 0.5em 0.75em;
   text-align: left;
 }
 
-.content th {
+.th {
   background: #f5f5f5;
   font-weight: 600;
 }

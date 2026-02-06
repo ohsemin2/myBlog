@@ -1,14 +1,11 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import Markdown from "react-markdown";
-import remarkMath from "remark-math";
-import rehypeKatex from "rehype-katex";
-import "katex/dist/katex.min.css";
 import { Header } from "@/widgets/header/ui";
 import { createClient } from "@/shared/api/supabase/server";
 import pencilIcon from "@/shared/assets/pencil.png";
 import styles from "./page.module.css";
+import MarkdownContent from "./MarkdownContent";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -27,7 +24,9 @@ export default async function PostDetailPage({ params }: PageProps) {
     notFound();
   }
 
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
   const date = new Date(post.created_at).toLocaleDateString("ko-KR", {
     year: "numeric",
@@ -51,14 +50,7 @@ export default async function PostDetailPage({ params }: PageProps) {
               )}
             </div>
           </header>
-          <div className={styles.content}>
-            <Markdown
-              remarkPlugins={[remarkMath]}
-              rehypePlugins={[rehypeKatex]}
-            >
-              {post.content || ""}
-            </Markdown>
-          </div>
+          <MarkdownContent content={post.content || ""} />
         </article>
       </main>
     </div>
