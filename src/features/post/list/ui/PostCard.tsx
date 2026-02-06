@@ -20,19 +20,20 @@ function extractFirstImage(markdown: string): string | null {
 // 마크다운에서 이미지, LaTeX, 링크 등 제거하고 순수 텍스트만 추출
 function extractPlainText(markdown: string): string {
   let text = markdown;
+  // 코드 블록 먼저 제거 (다른 패턴과 충돌 방지)
+  text = text.replace(/```[\s\S]*?```/g, " ");
   // 이미지 제거
   text = text.replace(/!\[.*?\]\(.*?\)/g, "");
-  // LaTeX 수식 제거 ($$...$$, $...$)
-  text = text.replace(/\$\$[\s\S]*?\$\$/g, " ");
-  text = text.replace(/\$[^\$]+?\$/g, " ");
+  // LaTeX 수식의 $ 기호만 제거하고 내용은 유지 ($$...$$, $...$)
+  text = text.replace(/\$\$([\s\S]*?)\$\$/g, "$1");
+  text = text.replace(/\$([^$\n]+?)\$/g, "$1");
   // 링크를 텍스트로 변환 [text](url) -> text
   text = text.replace(/\[([^\]]+)\]\([^\)]+\)/g, "$1");
   // 헤딩 마커 제거
   text = text.replace(/^#+\s+/gm, "");
   // 볼드, 이탤릭 마커 제거
   text = text.replace(/[*_]{1,2}([^*_]+)[*_]{1,2}/g, "$1");
-  // 코드 블록 제거
-  text = text.replace(/```[\s\S]*?```/g, "");
+  // 인라인 코드 제거
   text = text.replace(/`([^`]+)`/g, "$1");
   // 연속된 공백을 하나로
   text = text.replace(/\s+/g, " ");
