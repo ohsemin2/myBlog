@@ -6,21 +6,25 @@ import { createClient } from "@/shared/api/supabase/client";
 import { Editor } from "@toast-ui/react-editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import "@toast-ui/editor/dist/i18n/ko-kr";
+import CategorySelector from "./CategorySelector";
 import styles from "./PostEditor.module.css";
 
 interface PostEditEditorProps {
   id: string;
   initialTitle: string;
   initialContent: string;
+  initialCategoryId: number | null;
 }
 
 export default function PostEditEditor({
   id,
   initialTitle,
   initialContent,
+  initialCategoryId,
 }: PostEditEditorProps) {
   const editorRef = useRef<Editor>(null);
   const [title, setTitle] = useState(initialTitle);
+  const [categoryId, setCategoryId] = useState<number | null>(initialCategoryId);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
@@ -71,6 +75,7 @@ export default function PostEditEditor({
       .update({
         title: title.trim(),
         content,
+        category: categoryId,
       })
       .eq("id", id);
 
@@ -92,6 +97,7 @@ export default function PostEditEditor({
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
+      <CategorySelector value={categoryId} onChange={setCategoryId} />
       <div className={styles.editorWrapper}>
         <Editor
           ref={editorRef}

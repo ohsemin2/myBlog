@@ -18,7 +18,7 @@ export default async function EditPostPage({ params }: PageProps) {
 
   const { data: post } = await supabase
     .from("post")
-    .select("id, title, content")
+    .select("id, title, content, category")
     .eq("id", id)
     .single();
 
@@ -34,6 +34,7 @@ export default async function EditPostPage({ params }: PageProps) {
           id={post.id}
           initialTitle={post.title}
           initialContent={post.content}
+          initialCategoryId={post.category ?? null}
         />
       </main>
     </div>

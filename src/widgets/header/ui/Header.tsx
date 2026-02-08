@@ -1,9 +1,8 @@
-import Image from "next/image";
-import linesIcon from "@/shared/assets/lines.png";
 import { SearchBar } from "@/features/search/ui";
 import { AuthButtons } from "@/features/auth/ui";
 import { createClient } from "@/shared/api/supabase/server";
 import { CreatePost } from "@/features/post/create/ui";
+import { Sidebar } from "@/widgets/sidebar/ui";
 import styles from "./Header.module.css";
 import Link from "next/link";
 
@@ -17,9 +16,7 @@ export default async function Header() {
     <header className={styles.header}>
       <div className={styles.container}>
         <div className={styles.left}>
-          <button className={styles.menuButton}>
-            <Image src={linesIcon} alt="메뉴" width={20} height={20} />
-          </button>
+          <Sidebar />
           <Link href="/" className={styles.blogName}>
             Semin&apos;s Blog
           </Link>

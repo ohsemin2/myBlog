@@ -6,11 +6,13 @@ import { createClient } from "@/shared/api/supabase/client";
 import { Editor } from "@toast-ui/react-editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import "@toast-ui/editor/dist/i18n/ko-kr";
+import CategorySelector from "./CategorySelector";
 import styles from "./PostEditor.module.css";
 
 export default function PostEditor() {
   const editorRef = useRef<Editor>(null);
   const [title, setTitle] = useState("");
+  const [categoryId, setCategoryId] = useState<number | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
@@ -59,6 +61,7 @@ export default function PostEditor() {
     const { error } = await supabase.from("post").insert({
       title: title.trim(),
       content,
+      category: categoryId,
     });
 
     if (error) {
@@ -79,6 +82,7 @@ export default function PostEditor() {
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
+      <CategorySelector value={categoryId} onChange={setCategoryId} />
       <div className={styles.editorWrapper}>
         <Editor
           ref={editorRef}
