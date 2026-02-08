@@ -16,7 +16,7 @@ export default async function PostDetailPage({ params }: PageProps) {
   const supabase = await createClient();
   const { data: post } = await supabase
     .from("post")
-    .select("id, title, content, created_at")
+    .select("id, title, content, created_at, category")
     .eq("id", id)
     .single();
 
@@ -27,6 +27,23 @@ export default async function PostDetailPage({ params }: PageProps) {
   const {
     data: { user },
   } = await supabase.auth.getUser();
+
+  let categoryBreadcrumb: string | null = null;
+  if (post.category) {
+    const { data: allCategories } = await supabase
+      .from("categories")
+      .select("id, name, parent_id");
+    if (allCategories) {
+      const catMap = new Map(allCategories.map((c) => [c.id, c]));
+      const parts: string[] = [];
+      let current = catMap.get(post.category);
+      while (current) {
+        parts.unshift(current.name);
+        current = current.parent_id !== null ? catMap.get(current.parent_id) : undefined;
+      }
+      categoryBreadcrumb = parts.join(" > ");
+    }
+  }
 
   const date = new Date(post.created_at).toLocaleDateString("ko-KR", {
     year: "numeric",
@@ -41,6 +58,9 @@ export default async function PostDetailPage({ params }: PageProps) {
         <article className={styles.article}>
           <header className={styles.header}>
             <h1 className={styles.title}>{post.title}</h1>
+            {categoryBreadcrumb && (
+              <p className={styles.categoryBreadcrumb}>{categoryBreadcrumb}</p>
+            )}
             <div className={styles.dateRow}>
               <time className={styles.date}>{date}</time>
               {user && (

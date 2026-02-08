@@ -12,6 +12,7 @@ import styles from "./Sidebar.module.css";
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     const supabase = createClient();
@@ -22,6 +23,9 @@ export default function Sidebar() {
       .then(({ data }) => {
         if (data) setCategories(data);
       });
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      setIsLoggedIn(!!user);
+    });
   }, []);
 
   const tree = buildCategoryTree(categories);
@@ -71,6 +75,23 @@ export default function Sidebar() {
     );
   };
 
+  const handleRenameCategory = async (id: number, newName: string) => {
+    const supabase = createClient();
+    const { error } = await supabase
+      .from("categories")
+      .update({ name: newName })
+      .eq("id", id);
+
+    if (error) {
+      alert("카테고리 이름 변경에 실패했습니다: " + error.message);
+      return;
+    }
+
+    setCategories((prev) =>
+      prev.map((c) => (c.id === id ? { ...c, name: newName } : c))
+    );
+  };
+
   return (
     <>
       <button className={styles.menuButton} onClick={() => setIsOpen(true)}>
@@ -93,7 +114,13 @@ export default function Sidebar() {
         {tree.length > 0 && (
           <div className={styles.categorySection}>
             <h3 className={styles.categoryHeading}>카테고리</h3>
-            <CategoryTree nodes={tree} onNavigate={closeSidebar} onDelete={handleDeleteCategory} />
+            <CategoryTree
+              nodes={tree}
+              onNavigate={closeSidebar}
+              onDelete={handleDeleteCategory}
+              onRename={handleRenameCategory}
+              isLoggedIn={isLoggedIn}
+            />
           </div>
         )}
       </nav>
