@@ -1,4 +1,5 @@
 import { Header } from "@/widgets/header/ui";
+import { Footer } from "@/widgets/footer/ui";
 import { PostCard } from "@/features/post/list/ui";
 import { createClient } from "@/shared/api/supabase/server";
 import type { Category } from "@/entities/category";
@@ -84,6 +85,7 @@ export default async function PostsPage({ searchParams }: PostsPageProps) {
             <p className={styles.empty}>아직 작성된 글이 없습니다.</p>
           )}
         </main>
+        <Footer />
       </div>
     );
   }
@@ -114,6 +116,7 @@ export default async function PostsPage({ searchParams }: PostsPageProps) {
           <p className={styles.empty}>아직 작성된 글이 없습니다.</p>
         )}
       </main>
+      <Footer />
     </div>
   );
 }

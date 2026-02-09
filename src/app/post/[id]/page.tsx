@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { Header } from "@/widgets/header/ui";
+import { Footer } from "@/widgets/footer/ui";
 import { createClient } from "@/shared/api/supabase/server";
 import pencilIcon from "@/shared/assets/pencil.png";
 import styles from "./page.module.css";
@@ -73,6 +74,7 @@ export default async function PostDetailPage({ params }: PageProps) {
           <MarkdownContent content={post.content || ""} />
         </article>
       </main>
+      <Footer />
     </div>
   );
 }

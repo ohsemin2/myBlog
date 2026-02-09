@@ -1,4 +1,5 @@
 import { Header } from "@/widgets/header/ui";
+import { Footer } from "@/widgets/footer/ui";
 import { RecentPosts } from "@/features/post/list/ui";
 import styles from "./page.module.css";
 
@@ -9,6 +10,7 @@ export default function Home() {
       <main className={styles.main}>
         <RecentPosts />
       </main>
+      <Footer />
     </div>
   );
 }

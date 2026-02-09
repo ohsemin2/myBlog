@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Header } from "@/widgets/header/ui";
+import { Footer } from "@/widgets/footer/ui";
 import githubLogo from "@/shared/assets/GitHub-Logo.png";
 import mailIcon from "@/shared/assets/mail.png";
 import snuLogo from "@/shared/assets/snu.png";
@@ -58,6 +59,7 @@ export default function ProfilePage() {
           </div>
         </section>
       </main>
+      <Footer />
     </div>
   );
 }
