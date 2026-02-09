@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Header } from "@/widgets/header/ui";
 import githubLogo from "@/shared/assets/GitHub-Logo.png";
+import mailIcon from "@/shared/assets/mail.png";
 import snuLogo from "@/shared/assets/snu.png";
 import styles from "./page.module.css";
 
@@ -16,13 +17,21 @@ export default function ProfilePage() {
 
         <section className={styles.section}>
           <h2 className={styles.sectionTitle}>Contact</h2>
-          <div className={styles.contactRow}>
+          <div className={styles.contactItem}>
             <a
               href="https://github.com/ohsemin2"
               target="_blank"
               rel="noopener noreferrer"
+              className={styles.contactLink}
             >
-              <Image src={githubLogo} alt="GitHub" width={50} height={50} />
+              <Image src={githubLogo} alt="GitHub" width={25} height={25} />
+              <span>https://github.com/ohsemin2</span>
+            </a>
+          </div>
+          <div className={styles.contactItem}>
+            <a href="mailto:andrew041204@snu.ac.kr" className={styles.contactLink}>
+              <Image src={mailIcon} alt="Mail" width={25} height={25} />
+              <span>andrew041204@snu.ac.kr</span>
             </a>
           </div>
         </section>

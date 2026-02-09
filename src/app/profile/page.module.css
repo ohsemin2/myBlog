@@ -40,20 +40,25 @@
   border-bottom: 1px solid #e0e0e0;
 }
 
-.contactRow {
+.contactItem {
+  margin-bottom: 12px;
+}
+
+.contactLink {
   display: flex;
   align-items: center;
   gap: 12px;
-}
-
-.contactRow a {
-  display: flex;
-  align-items: center;
+  text-decoration: none;
+  color: #171717;
   transition: opacity 200ms;
 }
 
-.contactRow a:hover {
+.contactLink:hover {
   opacity: 0.7;
+}
+
+.contactLink span {
+  font-size: 15px;
 }
 
 .educationRow {
@@ -83,4 +88,10 @@
   margin: 4px 0 0;
   font-size: 14px;
   color: #666;
+}
+
+@media (max-width: 768px) {
+  .main {
+    padding: 24px 12px;
+  }
 }

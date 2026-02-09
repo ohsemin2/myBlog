@@ -26,3 +26,13 @@
   text-align: center;
   color: #999;
 }
+
+@media (max-width: 768px) {
+  .main {
+    padding: 16px 0;
+  }
+
+  .heading {
+    padding: 0 12px;
+  }
+}

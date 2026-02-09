@@ -8,3 +8,9 @@
   margin: 0 auto;
   padding: 32px 24px;
 }
+
+@media (max-width: 768px) {
+  .main {
+    padding: 16px 0;
+  }
+}
