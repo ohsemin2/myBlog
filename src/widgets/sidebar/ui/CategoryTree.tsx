@@ -25,7 +25,11 @@ export default function CategoryTree({
   onRename,
   isLoggedIn,
 }: CategoryTreeProps) {
-  const [expanded, setExpanded] = useState<Set<number>>(new Set());
+  const collectIds = (ns: CategoryTreeNode[]): number[] =>
+    ns.flatMap((n) => [n.id, ...collectIds(n.children)]);
+  const [expanded, setExpanded] = useState<Set<number>>(
+    () => new Set(collectIds(nodes))
+  );
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editName, setEditName] = useState("");
 

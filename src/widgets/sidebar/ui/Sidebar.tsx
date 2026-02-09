@@ -104,6 +104,14 @@ export default function Sidebar() {
 
       <nav className={`${styles.sidebar} ${isOpen ? styles.open : ""}`}>
         <Link
+          href="/profile"
+          className={styles.menuItem}
+          onClick={closeSidebar}
+        >
+          Profile
+        </Link>
+
+        <Link
           href="/posts"
           className={styles.menuItem}
           onClick={closeSidebar}
