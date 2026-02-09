@@ -48,12 +48,20 @@
   color: #999;
 }
 
+.actionButtons {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
 .editButton {
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 6px;
   border-radius: 4px;
+  background: none;
+  cursor: pointer;
   transition: background-color 200ms;
 }
 

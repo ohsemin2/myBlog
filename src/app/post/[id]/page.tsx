@@ -7,6 +7,7 @@ import { createClient } from "@/shared/api/supabase/server";
 import pencilIcon from "@/shared/assets/pencil.png";
 import styles from "./page.module.css";
 import MarkdownContent from "./MarkdownContent";
+import DeleteButton from "./DeleteButton";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -65,9 +66,12 @@ export default async function PostDetailPage({ params }: PageProps) {
             <div className={styles.dateRow}>
               <time className={styles.date}>{date}</time>
               {user && (
-                <Link href={`/post/${post.id}/edit`} className={styles.editButton}>
-                  <Image src={pencilIcon} alt="수정" width={16} height={16} />
-                </Link>
+                <div className={styles.actionButtons}>
+                  <Link href={`/post/${post.id}/edit`} className={styles.editButton}>
+                    <Image src={pencilIcon} alt="수정" width={16} height={16} />
+                  </Link>
+                  <DeleteButton postId={post.id} />
+                </div>
               )}
             </div>
           </header>
