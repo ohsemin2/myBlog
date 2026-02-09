@@ -1,7 +1,5 @@
 .page {
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
   background-color: var(--background);
 }
 
@@ -42,25 +40,20 @@
   border-bottom: 1px solid #e0e0e0;
 }
 
-.contactItem {
-  margin-bottom: 12px;
-}
-
-.contactLink {
+.contactRow {
   display: flex;
   align-items: center;
   gap: 12px;
-  text-decoration: none;
-  color: #171717;
+}
+
+.contactRow a {
+  display: flex;
+  align-items: center;
   transition: opacity 200ms;
 }
 
-.contactLink:hover {
+.contactRow a:hover {
   opacity: 0.7;
-}
-
-.contactLink span {
-  font-size: 15px;
 }
 
 .educationRow {
@@ -90,10 +83,4 @@
   margin: 4px 0 0;
   font-size: 14px;
   color: #666;
-}
-
-@media (max-width: 768px) {
-  .main {
-    padding: 24px 12px;
-  }
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/shared/api/supabase/client";
 import { Editor } from "@toast-ui/react-editor";
@@ -16,10 +16,34 @@ export default function PostEditor() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
+  useEffect(() => {
+    const editorInstance = editorRef.current?.getInstance();
+    if (!editorInstance) return;
+
+    editorInstance.addCommand("markdown", "customIndent", () => {
+      editorInstance.insertText("&nbsp;");
+      return true;
+    });
+    editorInstance.addCommand("wysiwyg", "customIndent", () => {
+      editorInstance.insertText("&nbsp;");
+      return true;
+    });
+  }, []);
+
   const toolbarItems = [
     ["heading", "bold", "italic", "strike"],
     ["hr", "quote"],
-    ["ul", "ol", "task", "indent", "outdent"],
+    [
+      "ul",
+      "ol",
+      "task",
+      {
+        name: "customIndent",
+        tooltip: "Indent",
+        command: "customIndent",
+        className: "toastui-editor-toolbar-icons indent",
+      },
+    ],
     ["table", "image", "link"],
     ["code", "codeblock"],
     ["scrollSync"],
