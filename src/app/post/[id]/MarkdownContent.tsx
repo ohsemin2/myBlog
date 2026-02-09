@@ -17,6 +17,8 @@ export default function MarkdownContent({ content }: MarkdownContentProps) {
     h2: (props) => <h2 className={styles.h2} {...props} />,
     h3: (props) => <h3 className={styles.h3} {...props} />,
     h4: (props) => <h4 className={styles.h4} {...props} />,
+    h5: (props) => <h5 className={styles.h5} {...props} />,
+    h6: (props) => <h6 className={styles.h6} {...props} />,
     p: (props) => <p className={styles.p} {...props} />,
     a: (props) => <a className={styles.a} {...props} />,
     ul: (props) => <ul className={styles.ul} {...props} />,

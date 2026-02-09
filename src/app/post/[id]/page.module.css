@@ -112,6 +112,20 @@
   color: #171717;
 }
 
+.h5 {
+  font-size: 1em;
+  font-weight: 600;
+  margin: 1.1em 0 0.4em;
+  color: #171717;
+}
+
+.h6 {
+  font-size: 0.9em;
+  font-weight: 600;
+  margin: 1em 0 0.4em;
+  color: #555;
+}
+
 .p {
   margin: 0.8em 0;
 }

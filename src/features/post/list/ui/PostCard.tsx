@@ -35,6 +35,8 @@ function extractPlainText(markdown: string): string {
   text = text.replace(/[*_]{1,2}([^*_]+)[*_]{1,2}/g, "$1");
   // 인라인 코드 제거
   text = text.replace(/`([^`]+)`/g, "$1");
+  // &nbsp; 제거
+  text = text.replace(/&nbsp;/g, " ");
   // 연속된 공백을 하나로
   text = text.replace(/\s+/g, " ");
   return text.trim();
