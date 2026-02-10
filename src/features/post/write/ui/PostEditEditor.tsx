@@ -129,7 +129,6 @@ export default function PostEditEditor({
         content,
         category: categoryId,
         is_draft: false,
-        published_at: new Date().toISOString(),
       })
       .eq("id", id);
 

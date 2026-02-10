@@ -110,7 +110,6 @@ export default function PostEditor() {
       content,
       category: categoryId,
       is_draft: false,
-      published_at: new Date().toISOString(),
     });
 
     if (error) {
