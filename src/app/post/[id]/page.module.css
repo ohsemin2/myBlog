@@ -73,16 +73,14 @@
   font-size: 16px;
   line-height: 1.8;
   color: #333;
+  min-width: 0;
+  overflow-x: hidden;
 }
 
 .content :global(.katex-display) {
   overflow-x: auto;
   overflow-y: hidden;
-}
-
-.content :global(.katex) {
-  overflow-x: auto;
-  overflow-y: hidden;
+  max-width: 100%;
 }
 
 .h1 {
