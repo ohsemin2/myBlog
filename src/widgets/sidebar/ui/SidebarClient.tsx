@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import linesIcon from "@/shared/assets/lines.png";
@@ -9,24 +9,17 @@ import { createClient } from "@/shared/api/supabase/client";
 import CategoryTree from "./CategoryTree";
 import styles from "./Sidebar.module.css";
 
-export default function Sidebar() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+interface SidebarClientProps {
+  initialCategories: Category[];
+  isLoggedIn: boolean;
+}
 
-  useEffect(() => {
-    const supabase = createClient();
-    supabase
-      .from("categories")
-      .select("id, name, parent_id")
-      .order("name")
-      .then(({ data }) => {
-        if (data) setCategories(data);
-      });
-    supabase.auth.getUser().then(({ data: { user } }) => {
-      setIsLoggedIn(!!user);
-    });
-  }, []);
+export default function SidebarClient({
+  initialCategories,
+  isLoggedIn,
+}: SidebarClientProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [categories, setCategories] = useState<Category[]>(initialCategories);
 
   const tree = buildCategoryTree(categories);
 

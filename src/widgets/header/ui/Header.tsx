@@ -1,16 +1,13 @@
 import { SearchBar } from "@/features/search/ui";
 import { AuthButtons } from "@/features/auth/ui";
-import { createClient } from "@/shared/api/supabase/server";
+import { getUser } from "@/shared/api/supabase/queries";
 import { CreatePost } from "@/features/post/create/ui";
 import { Sidebar } from "@/widgets/sidebar/ui";
 import styles from "./Header.module.css";
 import Link from "next/link";
 
 export default async function Header() {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getUser();
 
   return (
     <header className={styles.header}>

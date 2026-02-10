@@ -44,8 +44,8 @@ function extractPlainText(markdown: string): string {
 
 export default function PostCard({ id, title, content, createdAt }: PostCardProps) {
   const thumbnailUrl = extractFirstImage(content);
-  const plainText = extractPlainText(content);
-  const preview = plainText; // 미리보기 길이 제한
+  const contentHead = content.slice(0, 1000);
+  const preview = extractPlainText(contentHead);
 
   const date = new Date(createdAt).toLocaleDateString("ko-KR", {
     year: "numeric",

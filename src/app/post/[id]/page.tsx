@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Header } from "@/widgets/header/ui";
 import { Footer } from "@/widgets/footer/ui";
 import { createClient } from "@/shared/api/supabase/server";
+import { getUser, getCategories } from "@/shared/api/supabase/queries";
 import pencilIcon from "@/shared/assets/pencil.png";
 import styles from "./page.module.css";
 import MarkdownContent from "./MarkdownContent";
@@ -26,25 +27,19 @@ export default async function PostDetailPage({ params }: PageProps) {
     notFound();
   }
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getUser();
 
   let categoryBreadcrumb: string | null = null;
   if (post.category) {
-    const { data: allCategories } = await supabase
-      .from("categories")
-      .select("id, name, parent_id");
-    if (allCategories) {
-      const catMap = new Map(allCategories.map((c) => [c.id, c]));
-      const parts: string[] = [];
-      let current = catMap.get(post.category);
-      while (current) {
-        parts.unshift(current.name);
-        current = current.parent_id !== null ? catMap.get(current.parent_id) : undefined;
-      }
-      categoryBreadcrumb = parts.join(" > ");
+    const allCategories = await getCategories();
+    const catMap = new Map(allCategories.map((c) => [c.id, c]));
+    const parts: string[] = [];
+    let current = catMap.get(post.category);
+    while (current) {
+      parts.unshift(current.name);
+      current = current.parent_id !== null ? catMap.get(current.parent_id) : undefined;
     }
+    categoryBreadcrumb = parts.join(" > ");
   }
 
   const date = new Date(post.created_at).toLocaleDateString("ko-KR", {
