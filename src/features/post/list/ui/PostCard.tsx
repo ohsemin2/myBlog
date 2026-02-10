@@ -51,6 +51,7 @@ export default function PostCard({ id, title, content, createdAt }: PostCardProp
     year: "numeric",
     month: "long",
     day: "numeric",
+    timeZone: "Asia/Seoul",
   });
 
   return (

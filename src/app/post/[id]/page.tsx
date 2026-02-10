@@ -46,6 +46,7 @@ export default async function PostDetailPage({ params }: PageProps) {
     year: "numeric",
     month: "long",
     day: "numeric",
+    timeZone: "Asia/Seoul",
   });
 
   return (
