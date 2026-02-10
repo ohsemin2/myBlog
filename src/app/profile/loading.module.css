@@ -11,20 +11,19 @@
 
 .nameSection {
   margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .nameKo {
-  margin: 0;
-  font-size: 36px;
-  font-weight: 700;
-  color: #171717;
+  width: 100px;
+  height: 36px;
 }
 
 .nameEn {
-  margin: 4px 0 0;
-  font-size: 20px;
-  color: #666;
-  font-weight: 400;
+  width: 120px;
+  height: 20px;
 }
 
 .section {
@@ -32,54 +31,61 @@
 }
 
 .sectionTitle {
-  margin: 0 0 16px;
-  font-size: 20px;
-  font-weight: 600;
-  color: #171717;
+  width: 120px;
+  height: 20px;
+  margin-bottom: 16px;
   padding-bottom: 8px;
   border-bottom: 1px solid #e0e0e0;
 }
 
 .contactItem {
-  margin-bottom: 8px;
-}
-
-.contactLink {
   display: flex;
   align-items: center;
   gap: 8px;
-  transition: opacity 200ms;
+  margin-bottom: 8px;
 }
 
-.contactLink:hover {
-  opacity: 0.7;
+.icon {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  flex-shrink: 0;
 }
 
-.educationRow {
+.contactText {
+  width: 240px;
+  height: 16px;
+}
+
+.eduRow {
   display: flex;
   align-items: center;
   gap: 16px;
 }
 
 .eduLogo {
+  width: 54px;
+  height: 54px;
   flex-shrink: 0;
-  object-fit: contain;
 }
 
 .eduInfo {
   display: flex;
   flex-direction: column;
+  gap: 6px;
 }
 
 .eduName {
-  margin: 0;
-  font-size: 16px;
-  font-weight: 600;
-  color: #171717;
+  width: 380px;
+  height: 16px;
 }
 
 .eduMajor {
-  margin: 4px 0 0;
-  font-size: 14px;
-  color: #666;
+  width: 300px;
+  height: 14px;
+}
+
+.eduDate {
+  width: 80px;
+  height: 14px;
 }

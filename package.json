@@ -16,7 +16,6 @@
     "@vercel/analytics": "^1.6.1",
     "katex": "^0.16.28",
     "next": "16.1.6",
-    "nextjs-toploader": "^3.9.17",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-markdown": "^10.1.0",
