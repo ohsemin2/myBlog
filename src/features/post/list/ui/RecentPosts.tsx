@@ -8,7 +8,8 @@ export default async function RecentPosts() {
   const supabase = await createClient();
   const { data: posts } = await supabase
     .from("post")
-    .select("id, title, content, created_at")
+    .select("id, title, content, created_at, published_at")
+    .eq("is_draft", false)
     .order("created_at", { ascending: false })
     .limit(5);
 
@@ -38,7 +39,7 @@ export default async function RecentPosts() {
             id={post.id}
             title={post.title}
             content={post.content}
-            createdAt={post.created_at}
+            createdAt={post.published_at ?? post.created_at}
           />
         ))}
       </div>

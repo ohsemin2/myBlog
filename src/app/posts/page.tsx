@@ -58,7 +58,8 @@ export default async function PostsPage({ searchParams }: PostsPageProps) {
 
     const { data: posts } = await supabase
       .from("post")
-      .select("id, title, content, created_at")
+      .select("id, title, content, created_at, published_at")
+      .eq("is_draft", false)
       .in("category", targetIds)
       .order("created_at", { ascending: false });
 
@@ -77,7 +78,7 @@ export default async function PostsPage({ searchParams }: PostsPageProps) {
                   id={post.id}
                   title={post.title}
                   content={post.content}
-                  createdAt={post.created_at}
+                  createdAt={post.published_at ?? post.created_at}
                 />
               ))}
             </div>
@@ -92,7 +93,8 @@ export default async function PostsPage({ searchParams }: PostsPageProps) {
 
   const { data: posts } = await supabase
     .from("post")
-    .select("id, title, content, created_at")
+    .select("id, title, content, created_at, published_at")
+    .eq("is_draft", false)
     .order("created_at", { ascending: false });
 
   return (
@@ -108,7 +110,7 @@ export default async function PostsPage({ searchParams }: PostsPageProps) {
                 id={post.id}
                 title={post.title}
                 content={post.content}
-                createdAt={post.created_at}
+                createdAt={post.published_at ?? post.created_at}
               />
             ))}
           </div>

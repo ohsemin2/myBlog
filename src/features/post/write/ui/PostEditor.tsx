@@ -65,6 +65,29 @@ export default function PostEditor() {
     return urlData.publicUrl;
   };
 
+  const handleDraft = async () => {
+    const editorInstance = editorRef.current?.getInstance();
+    const content = editorInstance?.getMarkdown() ?? "";
+
+    setIsSubmitting(true);
+
+    const supabase = createClient();
+    const { error } = await supabase.from("post").insert({
+      title: title.trim() || "제목 없음",
+      content,
+      category: categoryId,
+      is_draft: true,
+    });
+
+    if (error) {
+      alert("임시저장에 실패했습니다: " + error.message);
+      setIsSubmitting(false);
+      return;
+    }
+
+    router.push("/drafts");
+  };
+
   const handleSubmit = async () => {
     if (!title.trim()) {
       alert("제목을 입력하세요");
@@ -86,6 +109,8 @@ export default function PostEditor() {
       title: title.trim(),
       content,
       category: categoryId,
+      is_draft: false,
+      published_at: new Date().toISOString(),
     });
 
     if (error) {
@@ -134,6 +159,13 @@ export default function PostEditor() {
         />
       </div>
       <div className={styles.buttonWrapper}>
+        <button
+          className={styles.draftButton}
+          onClick={handleDraft}
+          disabled={isSubmitting}
+        >
+          임시저장
+        </button>
         <button
           className={styles.submitButton}
           onClick={handleSubmit}

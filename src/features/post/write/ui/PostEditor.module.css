@@ -42,6 +42,7 @@
 .buttonWrapper {
   display: flex;
   justify-content: flex-end;
+  gap: 8px;
   margin-top: 16px;
 }
 
@@ -63,5 +64,27 @@
 
 .submitButton:disabled {
   background-color: #999;
+  cursor: not-allowed;
+}
+
+.draftButton {
+  padding: 10px 32px;
+  border: 1px solid black;
+  border-radius: 4px;
+  background: white;
+  color: black;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 200ms;
+}
+
+.draftButton:hover {
+  background-color: #f5f5f5;
+}
+
+.draftButton:disabled {
+  border-color: #999;
+  color: #999;
   cursor: not-allowed;
 }

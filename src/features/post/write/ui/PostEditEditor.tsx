@@ -14,6 +14,7 @@ interface PostEditEditorProps {
   initialTitle: string;
   initialContent: string;
   initialCategoryId: number | null;
+  isDraft: boolean;
 }
 
 export default function PostEditEditor({
@@ -21,6 +22,7 @@ export default function PostEditEditor({
   initialTitle,
   initialContent,
   initialCategoryId,
+  isDraft,
 }: PostEditEditorProps) {
   const editorRef = useRef<Editor>(null);
   const [title, setTitle] = useState(initialTitle);
@@ -77,7 +79,70 @@ export default function PostEditEditor({
     return urlData.publicUrl;
   };
 
-  const handleSubmit = async () => {
+  const handleDraft = async () => {
+    const editorInstance = editorRef.current?.getInstance();
+    const content = editorInstance?.getMarkdown() ?? "";
+
+    setIsSubmitting(true);
+
+    const supabase = createClient();
+    const { error } = await supabase
+      .from("post")
+      .update({
+        title: title.trim() || "제목 없음",
+        content,
+        category: categoryId,
+        is_draft: true,
+      })
+      .eq("id", id);
+
+    if (error) {
+      alert("임시저장에 실패했습니다: " + error.message);
+      setIsSubmitting(false);
+      return;
+    }
+
+    router.push("/drafts");
+  };
+
+  const handlePublish = async () => {
+    if (!title.trim()) {
+      alert("제목을 입력하세요");
+      return;
+    }
+
+    const editorInstance = editorRef.current?.getInstance();
+    const content = editorInstance?.getMarkdown();
+
+    if (!content?.trim()) {
+      alert("내용을 입력하세요");
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    const supabase = createClient();
+    const { error } = await supabase
+      .from("post")
+      .update({
+        title: title.trim(),
+        content,
+        category: categoryId,
+        is_draft: false,
+        published_at: new Date().toISOString(),
+      })
+      .eq("id", id);
+
+    if (error) {
+      alert("발행에 실패했습니다: " + error.message);
+      setIsSubmitting(false);
+      return;
+    }
+
+    router.push(`/post/${id}`);
+  };
+
+  const handleUpdate = async () => {
     if (!title.trim()) {
       alert("제목을 입력하세요");
       return;
@@ -149,13 +214,32 @@ export default function PostEditEditor({
         />
       </div>
       <div className={styles.buttonWrapper}>
-        <button
-          className={styles.submitButton}
-          onClick={handleSubmit}
-          disabled={isSubmitting}
-        >
-          {isSubmitting ? "수정 중..." : "수정"}
-        </button>
+        {isDraft ? (
+          <>
+            <button
+              className={styles.draftButton}
+              onClick={handleDraft}
+              disabled={isSubmitting}
+            >
+              임시저장
+            </button>
+            <button
+              className={styles.submitButton}
+              onClick={handlePublish}
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "발행 중..." : "발행"}
+            </button>
+          </>
+        ) : (
+          <button
+            className={styles.submitButton}
+            onClick={handleUpdate}
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "수정 중..." : "수정"}
+          </button>
+        )}
       </div>
     </div>
   );

@@ -9,6 +9,7 @@ interface PostEditEditorLoaderProps {
   initialTitle: string;
   initialContent: string;
   initialCategoryId: number | null;
+  isDraft: boolean;
 }
 
 export default function PostEditEditorLoader({
@@ -16,6 +17,7 @@ export default function PostEditEditorLoader({
   initialTitle,
   initialContent,
   initialCategoryId,
+  isDraft,
 }: PostEditEditorLoaderProps) {
   return (
     <PostEditEditor
@@ -23,6 +25,7 @@ export default function PostEditEditorLoader({
       initialTitle={initialTitle}
       initialContent={initialContent}
       initialCategoryId={initialCategoryId}
+      isDraft={isDraft}
     />
   );
 }

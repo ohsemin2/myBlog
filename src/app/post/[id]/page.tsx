@@ -19,7 +19,7 @@ export default async function PostDetailPage({ params }: PageProps) {
   const supabase = await createClient();
   const { data: post } = await supabase
     .from("post")
-    .select("id, title, content, created_at, category")
+    .select("id, title, content, created_at, published_at, category")
     .eq("id", id)
     .single();
 
@@ -42,7 +42,7 @@ export default async function PostDetailPage({ params }: PageProps) {
     categoryBreadcrumb = parts.join(" > ");
   }
 
-  const date = new Date(post.created_at).toLocaleDateString("ko-KR", {
+  const date = new Date(post.published_at ?? post.created_at).toLocaleDateString("ko-KR", {
     year: "numeric",
     month: "long",
     day: "numeric",

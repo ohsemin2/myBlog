@@ -112,6 +112,16 @@ export default function SidebarClient({
           최근 작성된 글
         </Link>
 
+        {isLoggedIn && (
+          <Link
+            href="/drafts"
+            className={styles.menuItem}
+            onClick={closeSidebar}
+          >
+            임시저장된 글
+          </Link>
+        )}
+
         {tree.length > 0 && (
           <div className={styles.categorySection}>
             <h3 className={styles.categoryHeading}>카테고리</h3>
