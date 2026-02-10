@@ -11,11 +11,6 @@ html {
   line-height: 1.5;
   -webkit-text-size-adjust: 100%;
   tab-size: 4;
-  overflow-x: hidden;
-}
-
-body {
-  overflow-x: hidden;
 }
 
 body {

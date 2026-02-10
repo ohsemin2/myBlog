@@ -15,9 +15,6 @@
   background: white;
   border-radius: 8px;
   padding: 32px;
-  overflow-x: hidden;
-  box-sizing: border-box;
-  max-width: 100%;
 }
 
 .header {
@@ -76,22 +73,7 @@
   font-size: 16px;
   line-height: 1.8;
   color: #333;
-  min-width: 0;
-  overflow-x: hidden;
-}
-
-.content :global(.katex-display) {
   overflow-x: auto;
-  overflow-y: hidden;
-  max-width: 100%;
-}
-
-.content :global(.katex) {
-  display: inline-block;
-  overflow-x: auto;
-  overflow-y: hidden;
-  max-width: 100%;
-  vertical-align: middle;
 }
 
 .h1 {
