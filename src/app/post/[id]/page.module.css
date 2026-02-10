@@ -75,6 +75,16 @@
   color: #333;
 }
 
+.content :global(.katex-display) {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.content :global(.katex) {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
 .h1 {
   font-size: 2em;
   font-weight: 700;
