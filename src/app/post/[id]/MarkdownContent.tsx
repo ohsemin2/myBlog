@@ -27,7 +27,27 @@ const components: Components = {
     inline ? <code className={styles.inlineCode} {...props} /> : <code {...props} />,
   pre: (props) => <pre className={styles.pre} {...props} />,
   hr: (props) => <hr className={styles.hr} {...props} />,
-  img: (props) => <img className={styles.img} {...props} />,
+  img: ({ src, ...props }: any) => {
+    let finalSrc = src || "";
+    let widthPct = 100;
+    const hashIndex = finalSrc.lastIndexOf("#");
+    if (hashIndex !== -1) {
+      const fragment = finalSrc.slice(hashIndex + 1);
+      const pct = parseInt(fragment, 10);
+      if (!isNaN(pct) && pct >= 1 && pct <= 100) {
+        widthPct = pct;
+        finalSrc = finalSrc.slice(0, hashIndex);
+      }
+    }
+    return (
+      <img
+        src={finalSrc}
+        className={styles.img}
+        style={{ width: `${widthPct}%` }}
+        {...props}
+      />
+    );
+  },
   table: (props) => <table className={styles.table} {...props} />,
   th: (props) => <th className={styles.th} {...props} />,
   td: (props) => <td className={styles.td} {...props} />,
