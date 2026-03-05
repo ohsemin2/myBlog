@@ -156,10 +156,16 @@
   background: #fafafa;
 }
 
-.ul,
+.ul {
+  margin: 0.8em 0;
+  padding-left: 1.5em;
+  list-style-type: disc;
+}
+
 .ol {
   margin: 0.8em 0;
   padding-left: 1.5em;
+  list-style-type: decimal;
 }
 
 .li {
