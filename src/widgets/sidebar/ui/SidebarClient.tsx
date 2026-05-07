@@ -5,27 +5,40 @@ import Image from "next/image";
 import Link from "next/link";
 import linesIcon from "@/shared/assets/lines.png";
 import { Category, buildCategoryTree } from "@/entities/category";
-import { createClient } from "@/shared/api/supabase/client";
 import CategoryTree from "./CategoryTree";
 import styles from "./Sidebar.module.css";
 
 interface SidebarClientProps {
   initialCategories: Category[];
-  isLoggedIn: boolean;
 }
 
 export default function SidebarClient({
   initialCategories,
-  isLoggedIn,
 }: SidebarClientProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [categories, setCategories] = useState<Category[]>(initialCategories);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [hasCheckedAuth, setHasCheckedAuth] = useState(false);
 
   const tree = buildCategoryTree(categories);
 
   const closeSidebar = () => setIsOpen(false);
 
+  const openSidebar = () => {
+    setIsOpen(true);
+
+    if (!hasCheckedAuth) {
+      setHasCheckedAuth(true);
+      import("@/shared/api/supabase/client").then(({ createClient }) => {
+        createClient().auth.getUser().then(({ data }) => {
+          setIsLoggedIn(!!data.user);
+        });
+      });
+    }
+  };
+
   const handleDeleteCategory = async (id: number, parentId: number | null) => {
+    const { createClient } = await import("@/shared/api/supabase/client");
     const supabase = createClient();
 
     // 1. 해당 카테고리의 글을 상위 카테고리로 이동 (없으면 null)
@@ -69,6 +82,7 @@ export default function SidebarClient({
   };
 
   const handleRenameCategory = async (id: number, newName: string) => {
+    const { createClient } = await import("@/shared/api/supabase/client");
     const supabase = createClient();
     const { error } = await supabase
       .from("categories")
@@ -87,7 +101,7 @@ export default function SidebarClient({
 
   return (
     <>
-      <button className={styles.menuButton} onClick={() => setIsOpen(true)}>
+      <button className={styles.menuButton} onClick={openSidebar}>
         <Image src={linesIcon} alt="메뉴" width={20} height={20} />
       </button>
 

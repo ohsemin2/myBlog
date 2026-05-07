@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { createClient } from "@/shared/api/supabase/client";
 import trashIcon from "@/shared/assets/trash.png";
 import styles from "./page.module.css";
 
@@ -12,6 +11,7 @@ export default function DeleteButton({ postId }: { postId: string }) {
   const handleDelete = async () => {
     if (!confirm("정말 삭제하시겠습니까?")) return;
 
+    const { createClient } = await import("@/shared/api/supabase/client");
     const supabase = createClient();
     const { error } = await supabase.from("post").delete().eq("id", postId);
 

@@ -1,6 +1,5 @@
-"use client";
-
-import ReactMarkdown, { Components } from "react-markdown";
+import type { ComponentProps } from "react";
+import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
@@ -23,12 +22,12 @@ const components: Components = {
   ol: (props) => <ol className={styles.ol} {...props} />,
   li: (props) => <li className={styles.li} {...props} />,
   blockquote: (props) => <blockquote className={styles.blockquote} {...props} />,
-  code: ({ inline, ...props }: any) =>
+  code: ({ inline, ...props }: ComponentProps<"code"> & { inline?: boolean }) =>
     inline ? <code className={styles.inlineCode} {...props} /> : <code {...props} />,
   pre: (props) => <pre className={styles.pre} {...props} />,
   hr: (props) => <hr className={styles.hr} {...props} />,
-  img: ({ src, ...props }: any) => {
-    let finalSrc = src || "";
+  img: ({ src, alt = "", ...props }: ComponentProps<"img">) => {
+    let finalSrc = typeof src === "string" ? src : "";
     let widthPct = 100;
     const hashIndex = finalSrc.lastIndexOf("#");
     if (hashIndex !== -1) {
@@ -42,6 +41,7 @@ const components: Components = {
     return (
       <img
         src={finalSrc}
+        alt={alt}
         className={styles.img}
         style={{ width: `${widthPct}%` }}
         {...props}

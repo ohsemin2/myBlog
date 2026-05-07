@@ -1,33 +1,24 @@
 import { notFound } from "next/navigation";
-import Image from "next/image";
-import Link from "next/link";
 import { Header } from "@/widgets/header/ui";
 import { Footer } from "@/widgets/footer/ui";
-import { createClient } from "@/shared/api/supabase/server";
-import { getUser, getCategories } from "@/shared/api/supabase/queries";
-import pencilIcon from "@/shared/assets/pencil.png";
+import { getPostById, getCategories } from "@/shared/api/supabase/queries";
 import styles from "./page.module.css";
 import MarkdownContent from "./MarkdownContent";
-import DeleteButton from "./DeleteButton";
+import PostActionsClient from "./PostActionsClient";
 
 interface PageProps {
   params: Promise<{ id: string }>;
 }
 
+export const revalidate = 30;
+
 export default async function PostDetailPage({ params }: PageProps) {
   const { id } = await params;
-  const supabase = await createClient();
-  const { data: post } = await supabase
-    .from("post")
-    .select("id, title, content, created_at, published_at, category")
-    .eq("id", id)
-    .single();
+  const post = await getPostById(id);
 
   if (!post) {
     notFound();
   }
-
-  const user = await getUser();
 
   let categoryBreadcrumb: string | null = null;
   if (post.category) {
@@ -61,14 +52,7 @@ export default async function PostDetailPage({ params }: PageProps) {
             )}
             <div className={styles.dateRow}>
               <time className={styles.date}>{date}</time>
-              {user && (
-                <div className={styles.actionButtons}>
-                  <Link href={`/post/${post.id}/edit`} className={styles.editButton}>
-                    <Image src={pencilIcon} alt="수정" width={16} height={16} />
-                  </Link>
-                  <DeleteButton postId={post.id} />
-                </div>
-              )}
+              <PostActionsClient postId={post.id} />
             </div>
           </header>
           <MarkdownContent content={post.content || ""} />

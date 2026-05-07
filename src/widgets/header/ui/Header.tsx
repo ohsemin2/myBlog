@@ -1,14 +1,10 @@
 import { SearchBar } from "@/features/search/ui";
-import { AuthButtons } from "@/features/auth/ui";
-import { getUser } from "@/shared/api/supabase/queries";
-import { CreatePost } from "@/features/post/create/ui";
+import { AuthButtonsClient } from "@/features/auth/ui";
 import { Sidebar } from "@/widgets/sidebar/ui";
 import styles from "./Header.module.css";
 import Link from "next/link";
 
-export default async function Header() {
-  const user = await getUser();
-
+export default function Header() {
   return (
     <header className={styles.header}>
       <div className={styles.container}>
@@ -24,8 +20,7 @@ export default async function Header() {
         </div>
 
         <div className={styles.right}>
-          {user && <CreatePost />}
-          <AuthButtons user={user} />
+          <AuthButtonsClient />
         </div>
       </div>
 
