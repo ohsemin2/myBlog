@@ -1,12 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import linesIcon from "@/shared/assets/lines.png";
 import { Category, buildCategoryTree } from "@/entities/category";
-import CategoryTree from "./CategoryTree";
 import styles from "./Sidebar.module.css";
+
+const CategoryTree = dynamic(() => import("./CategoryTree"), { ssr: false });
 
 interface SidebarClientProps {
   initialCategories: Category[];
@@ -20,7 +22,10 @@ export default function SidebarClient({
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [hasCheckedAuth, setHasCheckedAuth] = useState(false);
 
-  const tree = buildCategoryTree(categories);
+  const tree = useMemo(
+    () => (isOpen ? buildCategoryTree(categories) : []),
+    [categories, isOpen]
+  );
 
   const closeSidebar = () => setIsOpen(false);
 
@@ -30,8 +35,8 @@ export default function SidebarClient({
     if (!hasCheckedAuth) {
       setHasCheckedAuth(true);
       import("@/shared/api/supabase/client").then(({ createClient }) => {
-        createClient().auth.getUser().then(({ data }) => {
-          setIsLoggedIn(!!data.user);
+        createClient().auth.getSession().then(({ data }) => {
+          setIsLoggedIn(!!data.session?.user);
         });
       });
     }
@@ -136,7 +141,7 @@ export default function SidebarClient({
           </Link>
         )}
 
-        {tree.length > 0 && (
+        {isOpen && tree.length > 0 && (
           <div className={styles.categorySection}>
             <h3 className={styles.categoryHeading}>카테고리</h3>
             <CategoryTree

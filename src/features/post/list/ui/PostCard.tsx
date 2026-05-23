@@ -1,5 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
+import { formatKoreanDate } from "@/shared/lib/date";
+import { parseSizedImageUrl } from "@/shared/lib/markdownImage";
 import styles from "./PostCard.module.css";
 
 interface PostCardProps {
@@ -9,12 +11,13 @@ interface PostCardProps {
   createdAt: string;
 }
 
-// 마크다운에서 첫 번째 이미지 URL 추출
+const PREVIEW_SOURCE_LIMIT = 1000;
+const THUMBNAIL_SOURCE_LIMIT = 6000;
+
 function extractFirstImage(markdown: string): string | null {
-  // ![alt](url) 형식의 이미지 추출
-  const imageRegex = /!\[.*?\]\((.*?)\)/;
+  const imageRegex = /!\[[^\]]*]\(([^)\s]+)(?:\s+["'][^"']*["'])?\)/;
   const match = markdown.match(imageRegex);
-  return match ? match[1] : null;
+  return match ? parseSizedImageUrl(match[1]).src : null;
 }
 
 // 마크다운에서 이미지, LaTeX, 링크 등 제거하고 순수 텍스트만 추출
@@ -43,16 +46,11 @@ function extractPlainText(markdown: string): string {
 }
 
 export default function PostCard({ id, title, content, createdAt }: PostCardProps) {
-  const thumbnailUrl = extractFirstImage(content);
-  const contentHead = content.slice(0, 1000);
+  const thumbnailSource = content.slice(0, THUMBNAIL_SOURCE_LIMIT);
+  const thumbnailUrl = extractFirstImage(thumbnailSource);
+  const contentHead = content.slice(0, PREVIEW_SOURCE_LIMIT);
   const preview = extractPlainText(contentHead);
-
-  const date = new Date(createdAt).toLocaleDateString("ko-KR", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    timeZone: "Asia/Seoul",
-  });
+  const date = formatKoreanDate(createdAt);
 
   return (
     <div className={styles.wrapper}>
@@ -70,6 +68,7 @@ export default function PostCard({ id, title, content, createdAt }: PostCardProp
               width={110}
               height={110}
               className={styles.thumbnail}
+              sizes="110px"
               style={{ borderRadius: "3px" }}
             />
           </div>

@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { Header } from "@/widgets/header/ui";
 import { Footer } from "@/widgets/footer/ui";
 import { getPostById, getCategories } from "@/shared/api/supabase/queries";
+import { formatKoreanDate } from "@/shared/lib/date";
 import styles from "./page.module.css";
 import MarkdownContent from "./MarkdownContent";
 import PostActionsClient from "./PostActionsClient";
@@ -33,12 +34,7 @@ export default async function PostDetailPage({ params }: PageProps) {
     categoryBreadcrumb = parts.join(" > ");
   }
 
-  const date = new Date(post.published_at ?? post.created_at).toLocaleDateString("ko-KR", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    timeZone: "Asia/Seoul",
-  });
+  const date = formatKoreanDate(post.published_at ?? post.created_at);
 
   return (
     <div className={styles.page}>

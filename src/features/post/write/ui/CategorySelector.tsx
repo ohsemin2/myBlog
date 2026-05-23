@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { createClient } from "@/shared/api/supabase/client";
 import {
   Category,
@@ -12,6 +12,7 @@ import styles from "./CategorySelector.module.css";
 interface CategorySelectorProps {
   value: number | null;
   onChange: (id: number | null) => void;
+  initialCategories?: Category[];
 }
 
 function flattenTree(
@@ -19,23 +20,35 @@ function flattenTree(
   depth = 0
 ): { category: Category; depth: number }[] {
   const result: { category: Category; depth: number }[] = [];
-  for (const node of nodes) {
-    result.push({ category: node, depth });
-    result.push(...flattenTree(node.children, depth + 1));
+
+  const stack = [...nodes].reverse().map((node) => ({ node, depth }));
+  while (stack.length > 0) {
+    const { node, depth: currentDepth } = stack.pop()!;
+    result.push({ category: node, depth: currentDepth });
+
+    for (let i = node.children.length - 1; i >= 0; i -= 1) {
+      stack.push({ node: node.children[i], depth: currentDepth + 1 });
+    }
   }
+
   return result;
 }
 
 export default function CategorySelector({
   value,
   onChange,
+  initialCategories,
 }: CategorySelectorProps) {
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [categories, setCategories] = useState<Category[]>(
+    initialCategories ?? []
+  );
   const [showCreate, setShowCreate] = useState(false);
   const [newName, setNewName] = useState("");
   const [newParentId, setNewParentId] = useState<number | null>(null);
 
   useEffect(() => {
+    if (initialCategories !== undefined) return;
+
     const supabase = createClient();
     supabase
       .from("categories")
@@ -44,10 +57,12 @@ export default function CategorySelector({
       .then(({ data }) => {
         if (data) setCategories(data);
       });
-  }, []);
+  }, [initialCategories]);
 
-  const tree = buildCategoryTree(categories);
-  const flatList = flattenTree(tree);
+  const flatList = useMemo(
+    () => flattenTree(buildCategoryTree(categories)),
+    [categories]
+  );
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const val = e.target.value;

@@ -18,15 +18,35 @@ export const revalidate = 30;
 
 function collectDescendantIds(
   categoryId: number,
-  categories: Category[]
+  childrenByParent: Map<number, Category[]>
 ): number[] {
-  const children = categories.filter((c) => c.parent_id === categoryId);
   const ids: number[] = [];
-  for (const child of children) {
+
+  const stack = [...(childrenByParent.get(categoryId) ?? [])];
+  while (stack.length > 0) {
+    const child = stack.pop()!;
     ids.push(child.id);
-    ids.push(...collectDescendantIds(child.id, categories));
+    stack.push(...(childrenByParent.get(child.id) ?? []));
   }
+
   return ids;
+}
+
+function buildChildrenMap(categories: Category[]) {
+  const childrenByParent = new Map<number, Category[]>();
+
+  for (const category of categories) {
+    if (category.parent_id === null) continue;
+
+    const children = childrenByParent.get(category.parent_id);
+    if (children) {
+      children.push(category);
+    } else {
+      childrenByParent.set(category.parent_id, [category]);
+    }
+  }
+
+  return childrenByParent;
 }
 
 function buildBreadcrumb(
@@ -69,9 +89,9 @@ export default async function PostsPage({ searchParams }: PostsPageProps) {
   if (categoryId) {
     const categories = await getCategories();
     const categoriesMap = new Map(categories.map((c) => [c.id, c]));
+    const childrenByParent = buildChildrenMap(categories);
 
-    // 선택된 카테고리 + 모든 하위 카테고리 ID
-    targetIds = [categoryId, ...collectDescendantIds(categoryId, categories)];
+    targetIds = [categoryId, ...collectDescendantIds(categoryId, childrenByParent)];
     heading = buildBreadcrumb(categoryId, categoriesMap);
   }
 

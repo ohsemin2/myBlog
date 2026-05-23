@@ -1,6 +1,7 @@
 import { notFound, redirect } from "next/navigation";
 import { Header } from "@/widgets/header/ui";
 import { createClient } from "@/shared/api/supabase/server";
+import { getCategories } from "@/shared/api/supabase/queries";
 import PostEditEditorLoader from "@/features/post/write/ui/PostEditEditorLoader";
 
 interface PageProps {
@@ -16,11 +17,14 @@ export default async function EditPostPage({ params }: PageProps) {
     redirect("/login");
   }
 
-  const { data: post } = await supabase
-    .from("post")
-    .select("id, title, content, category, is_draft")
-    .eq("id", id)
-    .single();
+  const [{ data: post }, categories] = await Promise.all([
+    supabase
+      .from("post")
+      .select("id, title, content, category, is_draft")
+      .eq("id", id)
+      .single(),
+    getCategories(),
+  ]);
 
   if (!post) {
     notFound();
@@ -33,8 +37,9 @@ export default async function EditPostPage({ params }: PageProps) {
         <PostEditEditorLoader
           id={post.id}
           initialTitle={post.title}
-          initialContent={post.content}
+          initialContent={post.content ?? ""}
           initialCategoryId={post.category ?? null}
+          initialCategories={categories}
           isDraft={post.is_draft ?? false}
         />
       </main>

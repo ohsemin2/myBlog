@@ -18,9 +18,9 @@ export default function PostActionsClient({ postId }: PostActionsClientProps) {
     let isMounted = true;
 
     import("@/shared/api/supabase/client").then(({ createClient }) => {
-      createClient().auth.getUser().then(({ data }) => {
+      createClient().auth.getSession().then(({ data }) => {
         if (isMounted) {
-          setIsLoggedIn(!!data.user);
+          setIsLoggedIn(!!data.session?.user);
         }
       });
     });

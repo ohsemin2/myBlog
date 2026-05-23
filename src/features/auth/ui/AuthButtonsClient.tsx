@@ -20,9 +20,9 @@ export default function AuthButtonsClient() {
 
       const supabase = createClient();
 
-      supabase.auth.getUser().then(({ data }) => {
+      supabase.auth.getSession().then(({ data }) => {
         if (isMounted) {
-          setUser(data.user);
+          setUser(data.session?.user ?? null);
         }
       });
 

@@ -110,12 +110,12 @@ src/
 │   ├── api/supabase/
 │   │   ├── client.ts             # 브라우저용 Supabase 클라이언트
 │   │   ├── server.ts             # 서버용 Supabase 클라이언트 (@supabase/ssr)
-│   │   ├── middleware.ts         # 세션 갱신 미들웨어
+│   │   ├── middleware.ts         # 세션 갱신 로직
 │   │   └── queries.ts            # React cache() 래핑 공통 쿼리 (getUser, getCategories)
 │   ├── ui/                       # 공통 버튼·스켈레톤 컴포넌트
 │   └── assets/                   # PNG 아이콘 모음
 │
-└── middleware.ts                 # Next.js 미들웨어 (세션 갱신)
+└── proxy.ts                      # Next.js Proxy (세션 갱신)
 ```
 
 ---
@@ -134,7 +134,7 @@ src/
 | ----------------------------------- | ---------------------------------------------- |
 | `shared/api/supabase/server.ts`     | Server Component, Route Handler, Server Action |
 | `shared/api/supabase/client.ts`     | Client Component                               |
-| `shared/api/supabase/middleware.ts` | `src/middleware.ts`에서 세션 갱신              |
+| `shared/api/supabase/middleware.ts` | `src/proxy.ts`에서 세션 갱신                   |
 
 ### 공통 쿼리 캐싱
 
@@ -205,7 +205,7 @@ import { createClient } from "@/shared/api/supabase/server";
 - **sitemap**: 점(`.`)이 포함된 폴더명 문제로 `next.config.ts`의 `rewrites`를 통해 `/sitemap.xml` → `/sitemap` (Route Handler)로 우회한다.
 - **Toast UI 에디터**: `legacy-peer-deps=true` 없이는 설치 불가. 이미지 업로드 시 Supabase Storage `post-image` 버킷에 업로드 후 공개 URL을 반환한다.
 - **Next.js 15+ async params**: 동적 라우트의 `params`는 `Promise<{ id: string }>`이므로 반드시 `await params`로 접근한다.
-- **인증**: 로그인한 사용자만 포스트 작성/수정/삭제 UI가 노출된다. 미들웨어에서 세션을 갱신하므로 별도 route guard 코드는 없다.
+- **인증**: 로그인한 사용자만 포스트 작성/수정/삭제 UI가 노출된다. Proxy에서 세션을 갱신하므로 별도 route guard 코드는 없다.
 - **Toast UI 3.x 마크다운 에디터는 ProseMirror 기반** — CodeMirror가 아니므로 `.CodeMirror` DOM 접근 불가.
 
 ---
